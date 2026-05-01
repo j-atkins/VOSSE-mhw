@@ -26,6 +26,7 @@ xarray = "*"
 statsmodels = "*"
 bottleneck = "*"
 patsy = "*"
+numba = "*"
 
 # Visualisation
 matplotlib-base = "*"

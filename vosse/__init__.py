@@ -1,1 +1,1 @@
-from mhw_osse_virtualship import config  # noqa: F401
+from vosse import config  # noqa: F401
