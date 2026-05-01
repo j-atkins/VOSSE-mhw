@@ -70,6 +70,7 @@ pystac = "*"
 opensimplex = "*"
 python-librt = "*"
 
+
 # Data I/O
 pyarrow = "*"
 openpyxl = "*"
@@ -123,6 +124,7 @@ networkx = "*"
 [pypi-dependencies]
 python-dotenv = "*"
 vosse = { path = ".", editable = true }
+marEx = "*"
 plotly = "*"
 jupyterlab = "*"
 cookiecutter-data-science = "*"
