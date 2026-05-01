@@ -1,4 +1,4 @@
-[project]
+[workspace]
 name = "mhwOSSE-VirtualShip"
 description = "Evaluating new observations system designs (OSSEs) for marine heatwaves, using VirtualShip to authentically simulate real-life observations."
 version = "0.1.0"
@@ -7,12 +7,126 @@ platforms = ['linux-64', 'osx-64', 'osx-arm64', 'win-64']
 
 [dependencies]
 python = "~=3.12.0"
+pip = "*"
+
+# Linting / formatting / type checking
 loguru = "*"
 ruff = "*"
+mypy = "*"
+
+# CLI
 tqdm = "*"
 typer = "*"
-pip = "*"
+
+# Scientific core
+numpy = "*"
+pandas = "*"
+scipy = "*"
+xarray = "*"
+statsmodels = "*"
+bottleneck = "*"
+patsy = "*"
+
+# Visualisation
+matplotlib-base = "*"
+seaborn = "*"
+bokeh = "*"
+altair = "*"
+cmocean = "*"
+cartopy = "*"
+shapely = "*"
+pyproj = "*"
+pyshp = "*"
+
+# NetCDF / HDF / Zarr
+netcdf4 = "*"
+h5netcdf = "*"
+h5py = "*"
+zarr = "*"
+cftime = "*"
+
+# Dasks
+dask = "*"
+distributed = "*"
+cloudpickle = "*"
+locket = "*"
+partd = "*"
+toolz = "*"
+cytoolz = "*"
+
+# Cloud / remote storage
+fsspec = "*"
+gcsfs = "*"
+boto3 = "*"
+s3transfer = "*"
+botocore = "*"
+
+# Ocean / Met domain packages
+parcels = "*"
+copernicusmarine = "*"
+cf_xarray = "*"
+roaring-landmask = "*"
+pystac = "*"
+opensimplex = "*"
+python-librt = "*"
+
+# Data I/O
+pyarrow = "*"
+openpyxl = "*"
+orjson = "*"
+pyyaml = "*"
+simplejson = "*"
+
+# Jupyter / notebooks
+ipykernel = "*"
+ipython = "*"
+nbformat = "*"
+nbconvert = "*"
+nbsphinx = "*"
+nbclient = "*"
+jupyter_client = "*"
+jupyter_core = "*"
+
+# Dev / testing
+pytest = "*"
+pytest-asyncio = "*"
+pytest-cov = "*"
+pytest-timeout = "*"
+pre-commit = "*"
+coverage = "*"
+codecov = "*"
+ipdb = "*"
+virtualenv = "*"
+
+# Networking / HTTP
+requests = "*"
+aiohttp = "*"
+httpx = "*"
+urllib3 = "*"
+cryptography = "*"
+pyopenssl = "*"
+
+# Misc utilities
+pydantic = "*"
+pyzmq = "*"
+packaging = "*"
+certifi = "*"
+six = "*"
+attrs = "*"
+decorator = "*"
+filelock = "*"
+platformdirs = "*"
+psutil = "*"
+wrapt = "*"
+networkx = "*"
 
 [pypi-dependencies]
 python-dotenv = "*"
-mhw_osse_virtualship = { path = ".", editable = true }
+vosse = { path = ".", editable = true }
+plotly = "*"
+jupyterlab = "*"
+cookiecutter-data-science = "*"
+streamlit-bokeh = "*"
+analytics-python = "*"
+backoff = "*"
+monotonic = "*"
