@@ -19,7 +19,7 @@ tqdm = "*"
 typer = "*"
 
 # Scientific core
-numpy = "*"
+numpy = ">=1,<2"
 pandas = "*"
 scipy = "*"
 xarray = "*"
@@ -36,7 +36,7 @@ altair = "*"
 cmocean = "*"
 cartopy = "*"
 shapely = "*"
-pyproj = "*"
+pyproj = ">=3,<4"
 pyshp = "*"
 
 # NetCDF / HDF / Zarr
@@ -46,14 +46,8 @@ h5py = "*"
 zarr = "*"
 cftime = "*"
 
-# Dasks
-dask = "*"
-distributed = "*"
-cloudpickle = "*"
-locket = "*"
-partd = "*"
-toolz = "*"
-cytoolz = "*"
+# Dask (pinned to match marEx 4.x requirement)
+dask = "==2025.3.0"
 
 # Cloud / remote storage
 fsspec = "*"
@@ -63,13 +57,14 @@ s3transfer = "*"
 botocore = "*"
 
 # Ocean / Met domain packages
-parcels = "*"
-copernicusmarine = "*"
+parcels = ">3.1.0"
+copernicusmarine = ">=2.2.2"
 cf_xarray = "*"
 roaring-landmask = "*"
 pystac = "*"
-opensimplex = "*"
+opensimplex = "==0.4.5"
 python-librt = "*"
+sortedcontainers = "==2.4.0"
 
 
 # Data I/O
@@ -109,7 +104,7 @@ cryptography = "*"
 pyopenssl = "*"
 
 # Misc utilities
-pydantic = "*"
+pydantic = ">=2,<3"
 pyzmq = "*"
 packaging = "*"
 certifi = "*"
@@ -125,7 +120,8 @@ networkx = "*"
 [pypi-dependencies]
 python-dotenv = "*"
 vosse = { path = ".", editable = true }
-marEx = "*"
+virtualship = { git = "https://github.com/OceanParcels/virtualship.git", branch = "main" }
+marEx = ">=4.1"
 plotly = "*"
 jupyterlab = "*"
 cookiecutter-data-science = "*"
