@@ -44,7 +44,7 @@ sst_ds = (
 
 ## this may take a while; depending on internet connection etc... but no downloads required so that's fun!
 
-if not os.path.exists(FPaths.detected_extremes):
+if not os.path.exists(FPaths.marEx_detected):
     extremes = marEx.preprocess_data(
         sst_ds.thetao,
         dimensions={"time": "time", "y": "latitude", "x": "longitude"},
@@ -57,11 +57,11 @@ if not os.path.exists(FPaths.detected_extremes):
         verbose=True,
     )
 
-    os.makedirs(FPaths.detected_extremes, exist_ok=True)
-    extremes.to_zarr(FPaths.detected_extremes, consolidated=True)
+    os.makedirs(FPaths.marEx_detected, exist_ok=True)
+    extremes.to_zarr(FPaths.marEx_detected, consolidated=True)
 
 chunk_size = {"time": 25, "lat": -1, "lon": -1}
-extremes = xr.open_dataset(FPaths.detected_extremes, chunks=chunk_size)
+extremes = xr.open_dataset(FPaths.marEx_detected, chunks=chunk_size)
 
 # %%
 
@@ -74,7 +74,7 @@ def main():
         print("Tracking started...")
 
         # ID, Track, & Merge
-        tracked_events, merge_events = marEx.tracker(
+        marEx_tracked, marEx_merged = marEx.tracker(
             extremes.extreme_events,
             extremes.mask,
             area_filter_absolute=100,  # Remove objects smaller than 100 grid cells
@@ -85,8 +85,8 @@ def main():
             verbose=False,
         ).run(return_merges=True)
 
-        tracked_events.to_zarr(FPaths.tracked_events, consolidated=True)
-        merge_events.to_zarr(FPaths.merge_events, consolidated=True)
+        marEx_tracked.to_zarr(FPaths.marEx_tracked, consolidated=True)
+        marEx_merged.to_zarr(FPaths.marEx_merged, consolidated=True)
 
         print("Tracking complete and results saved to disk.")
 

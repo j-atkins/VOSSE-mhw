@@ -116,6 +116,7 @@ platformdirs = "*"
 psutil = "*"
 wrapt = "*"
 networkx = "*"
+ocetrac = ">=0.1.4,<0.2"
 
 [pypi-dependencies]
 python-dotenv = "*"
