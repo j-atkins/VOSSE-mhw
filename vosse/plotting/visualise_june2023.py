@@ -22,18 +22,3 @@ june2023_events = marEx_tracked.sel(time=june_slice)
 
 config = marEx.PlotConfig(plot_IDs=True)
 fig, ax = june2023_events.ID_field.plotX.multi_plot(config, col="time", col_wrap=3)
-
-
-# %%
-from matplotlib import pyplot as plt
-
-test = marEx_tracked.sel(time="2023-06-23")
-plt.pcolormesh(test.ID_field, vmin=test.ID_field.max() - 12, vmax=test.ID_field.max())
-
-# %%
-merges = test.merge_ledger.where(test.merge_ledger > 0, drop=True)
-merges
-
-# plt.pcolormesh(merges)
-
-# %%

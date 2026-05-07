@@ -130,3 +130,14 @@ streamlit-bokeh = "*"
 analytics-python = "*"
 backoff = "*"
 monotonic = "*"
+
+[feature.test.dependencies]
+pytest = "*"
+
+
+[feature.test.tasks]
+tests = "pytest"
+
+
+[environments]
+test-latest = { features = ["test"], solve-group = "test" } 
