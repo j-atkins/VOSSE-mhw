@@ -1,5 +1,5 @@
 [workspace]
-name = "mhwOSSE-VirtualShip"
+name = "vOSSE-blob"
 description = "Evaluating new observations system designs (OSSEs) for marine heatwaves, using VirtualShip to authentically simulate real-life observations."
 version = "0.1.0"
 channels = ['conda-forge']

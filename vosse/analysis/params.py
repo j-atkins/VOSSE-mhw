@@ -13,8 +13,8 @@ class FPaths:
 
     # MHW tracking [marEx version]
     marEx_detected: str = f"{PROCESSED_DATA_DIR}/marEx_track/extremes.zarr"
-    marEx_tracked: str = f"{PROCESSED_DATA_DIR}/marEx_track/marEx_tracked.zarr"
-    marEx_merged: str = f"{PROCESSED_DATA_DIR}/marEx_track/marEx_merged.zarr"
+    marEx_tracked: str = f"{PROCESSED_DATA_DIR}/marEx_track/tracked_events.zarr"
+    marEx_merged: str = f"{PROCESSED_DATA_DIR}/marEx_track/merge_events.zarr"
 
     # plots
     plot_dir: str = f"{PROCESSED_DATA_DIR}/plots"
@@ -31,7 +31,7 @@ class TrackingParams:
     bathy_id: str = "cmems_mod_nws_phy_my_7km-3D_static"
 
     start_date: str = "1993-01-01"
-    end_date: str = "2026-01-01"
+    end_date: str = "2026-04-01"
 
     # 'zoom in' on the shelf region (i.e. < 200m depth area); mainly just to speed up tracking
     lat_min: float = 47.0
