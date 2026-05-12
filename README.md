@@ -4,3 +4,5 @@
 [![unit-tests](https://github.com/j-atkins/vOSSE-blob/actions/workflows/ci.yml/badge.svg)](https://github.com/j-atkins/vOSSE-blob/actions/workflows/ci.yml)
 
 Evaluating new observations system designs (OSSEs) for marine heatwaves, using VirtualShip to authentically simulate real-life observations.
+
+#TODO: More details on the repo to follow...
