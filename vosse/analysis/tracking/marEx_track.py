@@ -19,6 +19,11 @@ else:
     )
     copernicusmarine.login()
 
+# %% Start Dask client early so both preprocess_data and tracker benefit from parallelism
+
+client = Client(processes=False)
+print(f"Dask Dashboard available at: {client.dashboard_link}")
+
 # %%
 
 sst_ds = (
@@ -34,9 +39,8 @@ sst_ds = (
         maximum_latitude=TrackingParams.lat_max,
     )
     .isel(depth=0)
-    .chunk({"time": 25, "latitude": -1, "longitude": -1})
+    .chunk({"time": 30, "latitude": -1, "longitude": -1})
 )
-
 
 # %%
 
@@ -48,51 +52,49 @@ if not os.path.exists(FPaths.marEx_detected):
     extremes = marEx.preprocess_data(
         sst_ds.thetao,
         dimensions={"time": "time", "y": "latitude", "x": "longitude"},
-        method_anomaly="shifting_baseline",  # Anomalies from a rolling climatology using previous window_year years
+        method_anomaly=TrackingParams.method_anomaly,  # Anomalies from a rolling climatology using previous window_year years
         method_extreme="hobday_extreme",  # Local day-of-year specific thresholds with windowing
         threshold_percentile=95,  # 95th percentile threshold for extremes
         window_year_baseline=15,  # Rolling climatology window
         smooth_days_baseline=21,  #    and smoothing window [days] for determining the anomalies
         window_days_hobday=11,  # Window size of compiled samples collected for the extremes detection
         verbose=True,
+        dask_chunks={"time": 25},
     )
 
     os.makedirs(FPaths.marEx_detected, exist_ok=True)
     extremes.to_zarr(FPaths.marEx_detected, consolidated=True)
 
-chunk_size = {"time": 25, "lat": -1, "lon": -1}
-extremes = xr.open_dataset(FPaths.marEx_detected, chunks=chunk_size)
+# Re-open with time-chunked layout suited for tracking (full spatial domain per time step)
+extremes = xr.open_dataset(
+    FPaths.marEx_detected, chunks={"time": 25, "latitude": -1, "longitude": -1}
+)
 
 # %%
 
 ## tracking
 
-Cl = Client(processes=False)
+print("Tracking started...")
 
-with Cl as client:
-    print(f"Dask Dashboard available at: {client.dashboard_link}")
+# ID, Track, & Merge
+marEx_tracked, marEx_merged = marEx.tracker(
+    extremes.extreme_events,
+    extremes.mask,
+    area_filter_absolute=100,  # Remove objects smaller than 100 grid cells
+    R_fill=8,  # Radius for filling gaps (in grid cells)
+    dimensions={"time": "time", "y": "latitude", "x": "longitude"},
+    regional_mode=True,
+    coordinate_units="degrees",
+    verbose=False,
+    allow_merging=True,
+    overlap_threshold=0.5,
+    nn_partitioning=True,
+).run(return_merges=True)
 
-    print("Tracking started...")
+marEx_tracked.to_zarr(FPaths.marEx_tracked, mode="w", consolidated=True)
+marEx_merged.to_zarr(FPaths.marEx_merged, mode="w", consolidated=True)
 
-    # ID, Track, & Merge
-    marEx_tracked, marEx_merged = marEx.tracker(
-        extremes.extreme_events,
-        extremes.mask,
-        area_filter_absolute=100,  # Remove objects smaller than 100 grid cells
-        R_fill=8,  # Radius for filling gaps (in grid cells)
-        dimensions={"time": "time", "y": "latitude", "x": "longitude"},
-        regional_mode=True,
-        coordinate_units="degrees",
-        verbose=False,
-        allow_merging=True,
-        overlap_threshold=0.5,
-        nn_partitioning=True,
-    ).run(return_merges=True)
-
-    marEx_tracked.to_zarr(FPaths.marEx_tracked, consolidated=True)
-    marEx_merged.to_zarr(FPaths.marEx_merged, consolidated=True)
-
-    print("Tracking complete and results saved to disk.")
-    client.close()
+print("Tracking complete and results saved to disk.")
+client.close()
 
 # %%

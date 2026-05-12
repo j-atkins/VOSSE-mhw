@@ -1,7 +1,13 @@
 import copernicusmarine
+import numpy as np
 import xarray as xr
 
 from vosse.analysis.params import TrackingParams
+
+
+def get_area_weights(ds: xr.Dataset) -> xr.DataArray:
+    latrad = np.deg2rad(ds.latitude)
+    return np.cos(latrad)
 
 
 def get_bathymetry_ds(

@@ -19,6 +19,7 @@ class FPaths:
     # post-processed MHW stats
     mhw_mean_intensity: str = f"{PROCESSED_DATA_DIR}/mhw_stats/mean_intensity.zarr"
     mhw_peak_intensity: str = f"{PROCESSED_DATA_DIR}/mhw_stats/peak_intensity.zarr"
+    mhw_heat_content: str = f"{PROCESSED_DATA_DIR}/mhw_stats/heat_content.zarr"
 
     # plots
     plot_dir: str = f"{PROCESSED_DATA_DIR}/plots"
@@ -28,12 +29,14 @@ class FPaths:
 class TrackingParams:
     """Parameters for MHW tracking."""
 
-    product_id: str = (
-        "cmems_mod_nws_phy-t_my_7km-3D_P1D-m"  # NWS product, physics, AMM7 (7km), daily, global
-    )
+    # products
+    product_id: str = "cmems_mod_glo_phy_my_0.083deg_P1D-m"  # Global physics reanalysis product
+    bathy_id: str = "cmems_mod_glo_phy_my_0.083deg_static"  # "
 
-    bathy_id: str = "cmems_mod_nws_phy_my_7km-3D_static"
+    # anomaly detection parameters
+    method_anomaly: str = "shifting_baseline"  # anomalies from a rolling climatology
 
+    # time bounds
     start_date: str = "1993-01-01"
     end_date: str = "2026-01-01"
 
@@ -43,18 +46,13 @@ class TrackingParams:
     lon_min: float = -14.4
     lon_max: float = 10.0
 
-    # tracking parameters
-    ocetrac_in_memory = True
-    ocetrac_threshold = 0.90  # percentile threshold for ocetrac (percentile)
-
 
 @dataclass
 class HeatContentParams:
     """Parameters for heat content calculation."""
 
-    product_id: str = (
-        "cmems_mod_nws_phy-t_my_7km-3D_P1D-m"  # NWS product, physics, AMM7 (7km), daily, global
-    )
+    product_id: str = "cmems_mod_glo_phy_my_0.083deg_P1D-m"  # Global physics reanalysis product
+    mld_id: str = "cmems_mod_glo_phy_my_0.083deg_P1D-m"  # "
 
     start_date: str = "1993-01-01"
     end_date: str = "2026-01-01"
