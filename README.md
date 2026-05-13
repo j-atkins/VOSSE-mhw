@@ -5,4 +5,5 @@
 
 Evaluating new observations system designs (OSSEs) for marine heatwaves, using VirtualShip to authentically simulate real-life observations.
 
-#TODO: More details on the repo to follow...
+> [!NOTE]
+> This is a work in progress... more information to follow.
